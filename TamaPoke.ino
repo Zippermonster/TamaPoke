@@ -3620,8 +3620,8 @@ static void btlResolve(uint8_t yourMove) {
     btlWon = btlFoe.fainted();
     btlNewBadge = false;
     btlTrainGain = 0;
-    if (btlWon && btlTrainer >= 0 && !pet.hasBadge(btlRegion, btlTrainer, btlHard)) {
-      pet.winBadge(btlRegion, btlTrainer, btlHard);
+    if (btlWon && btlTrainer >= 0 && !pet.hasBadge(gymRegion, btlTrainer, btlHard)) {
+      pet.winBadge(gymRegion, btlTrainer, btlHard);
       btlNewBadge = true;
     }
     // A badge and nothing else made the ladder a one-way checklist. A win now
@@ -3771,7 +3771,7 @@ void renderWin() {
     if (btlHard) {
       for (int r = 62; r >= 56; r--) gfx->drawCircle(CX, by, r, r % 2 ? 0xFEA0 : 0xFF60);
     }
-    const BadgeArt *a = badgeArtFor(btlRegion, btlTrainer);
+    const BadgeArt *a = badgeArtFor(gymRegion, btlTrainer);
     if (a) {
       for (int r = 0; r < BADGE_PX; r++)
         for (int c = 0; c < BADGE_PX; c++) {
@@ -3784,7 +3784,7 @@ void renderWin() {
     } else {
       // This region has no badge art. Say so with a plain medal in the leader's
       // type colour rather than borrowing another region's badge.
-      const Trainer &tr = TRAINER_SETS[btlRegion % GYM_REGIONS].list[btlTrainer];
+      const Trainer &tr = TRAINER_SETS[gymRegion % GYM_REGIONS].list[btlTrainer];
       gfx->fillCircle(CX, by, 26, typeColor(tr.type));
       gfx->drawCircle(CX, by, 26, UI_INK);
       char n[4];
@@ -3801,7 +3801,7 @@ void renderWin() {
       gfx->print(T(S_BTL_NEWBADGE));
     }
   }
-  snprintf(l, sizeof(l), T(S_BADGES_FMT), pet.badgeCountIn(btlRegion, btlHard));
+  snprintf(l, sizeof(l), T(S_BADGES_FMT), pet.badgeCountIn(gymRegion, btlHard));
   gfx->setTextColor(UI_INK);
   gfx->setTextSize(2);
   gfx->setCursor(CX - (int)strlen(l) * 6, 316);
